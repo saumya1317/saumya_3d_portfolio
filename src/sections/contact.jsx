@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 
-import TitleHeader from "../components/TitleHeader";
+import Titleheader from "../components/Titleheader";
 import ContactExperience from "../components/models/contact/ContactExperience";
 
 const Contact = () => {
@@ -42,7 +42,7 @@ const Contact = () => {
   return (
     <section id="contact" className="flex-center section-padding">
       <div className="w-full h-full md:px-10 px-5">
-        <TitleHeader
+        <Titleheader
           title="Get in Touch – Let’s Connect"
           sub="💬 Have questions or ideas? Let’s talk! 🚀"
         />

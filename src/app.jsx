@@ -1,7 +1,8 @@
 import React from 'react'
 import Hero from './sections/hero'
 import Showcasesec from './sections/Showcasesec'
-import Navbar from './components/navbar'
+import Navbar from "./components/Navbar"; 
+
 import Logosection from './components/logosection'
 import Featurecards from './sections/Featurecards'
 import Experiencesection from './sections/Experiencesection'

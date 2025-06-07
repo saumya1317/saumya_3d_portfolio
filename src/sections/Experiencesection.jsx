@@ -1,16 +1,22 @@
-import React from 'react'
-import Titleheader from '../components/Titleheader'
-import { expCards } from '../constants'
+import React, { useRef, useEffect } from 'react';
+import { Canvas } from '@react-three/fiber';
+import Titleheader from '../components/Titleheader';
+import { expCards } from '../constants';
+import Glowcard from '../components/Glowcard';
+import Particles from '../components/heromodels/Particle';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
+import { ScrollTrigger } from 'gsap/all';
 
-import Glowcard from '../components/Glowcard'
-import gsap from 'gsap'
-import { useGSAP } from '@gsap/react'
-import { ScrollTrigger } from 'gsap/all'
-gsap.registerPlugin(ScrollTrigger)
+gsap.registerPlugin(ScrollTrigger);
 
 const Experiencesection = () => {
+  const sectionRef = useRef(null);
+  const isScrollingRef = useRef(true);
+  const scrollTimeout = useRef(null);
+
   useGSAP(() => {
-    // Animate timeline cards (Glowcard)
+    // Animate GSAP timelines (unchanged)
     gsap.utils.toArray('.timeline-card').forEach((card) => {
       gsap.from(card, {
         xPercent: -100,
@@ -25,7 +31,6 @@ const Experiencesection = () => {
       });
     });
 
-    // Animate the entire experience card wrapper
     gsap.utils.toArray('.exp-card-wrapper').forEach((wrapper) => {
       gsap.from(wrapper, {
         y: 100,
@@ -39,7 +44,6 @@ const Experiencesection = () => {
       });
     });
 
-    // Animate timeline scale shrinking
     gsap.to('.timeline', {
       transformOrigin: 'bottom bottom',
       scaleY: 0,
@@ -53,9 +57,47 @@ const Experiencesection = () => {
     });
   }, []);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const section = sectionRef.current;
+      if (!section) return;
+
+      const rect = section.getBoundingClientRect();
+      const inView = rect.top < window.innerHeight && rect.bottom > 0;
+
+      if (inView) {
+        isScrollingRef.current = true;
+        clearTimeout(scrollTimeout.current);
+        scrollTimeout.current = setTimeout(() => {
+          isScrollingRef.current = false;
+        }, 200);
+      } else {
+        isScrollingRef.current = true; // always animate outside
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      clearTimeout(scrollTimeout.current);
+    };
+  }, []);
+
   return (
-    <section id="experience" className="w-full md:mt-40 mt-20 section-padding xl:px-0">
-      <div className="w-full h-full md:px-20 px-5">
+    <section
+      id="experience"
+      className="relative w-full md:mt-40 mt-20 section-padding xl:px-0"
+      ref={sectionRef}
+    >
+      {/* Particles Layer */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <Canvas>
+          <Particles count={300} isScrollingRef={isScrollingRef} />
+        </Canvas>
+      </div>
+
+      {/* Content Layer */}
+      <div className="w-full h-full md:px-20 px-5 relative z-10">
         <Titleheader title="Projects made 💼" sub="some of my projects made till now 😓" />
         <div className="mt-32 relative">
           <div className="relative z-50 xl:space-y-32 space-y-10">
@@ -95,7 +137,7 @@ const Experiencesection = () => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default Experiencesection
+export default Experiencesection;

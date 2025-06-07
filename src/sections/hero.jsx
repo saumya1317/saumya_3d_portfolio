@@ -5,7 +5,9 @@ import Heroexperience from "../components/heromodels/HeroExperience.jsx";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import AnimatedCounter from "../components/AnimatedCounter.jsx";
-
+import { Canvas } from "@react-three/fiber";
+import { OrbitControls } from "@react-three/drei";
+import Scene  from "../components/heromodels/Scene.jsx"
 const Hero = () => {
   useGSAP(() => {
     gsap.fromTo(
@@ -37,12 +39,13 @@ const Hero = () => {
         <header className="flex flex-col justify-center md:w-full w-screen md:px-20 px-5">
           <div className="flex flex-col gap-7">
             <div className="hero-text">
-              <h1 className="text-4xl md:text-6xl font-bold leading-tight text-white">
-                Building Real Solutions
-              </h1>
-              <h1 className="text-4xl md:text-6xl font-bold leading-tight text-indigo-400">
-                From Full-Stack to AI
-              </h1>
+             <h1 className="text-4xl md:text-6xl font-bold leading-tight text-white">
+  Building Real Solutions
+</h1>
+<h1 className="text-4xl md:text-6xl font-bold leading-tight" style={{ color: '#7E5A9B' }}>
+  From Full-Stack to AI
+</h1>
+
 
               {/* Sliding Words Section */}
               <div className="mt-6">
@@ -81,7 +84,7 @@ const Hero = () => {
         {/* Right 3D model */}
         <figure>
           <div className="hero-3d-layout">
-          
+         <Heroexperience/>
           </div>
         </figure>
       </div>
