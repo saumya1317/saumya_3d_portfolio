@@ -4,7 +4,7 @@ import { OrbitControls } from "@react-three/drei";
 import { useMediaQuery } from "react-responsive";
 import { Suspense } from "react";
 
-import HeroLights from "./HeroLights";
+import HeroLights from "./Herolights";
 import Particles from "./Particle";
 import Scene from "./Scene";
 
